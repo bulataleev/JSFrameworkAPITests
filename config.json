@@ -1,0 +1,9 @@
+{
+    "baseUrl": "https://api.thecatapi.com",
+    "getVotes": "/v1/votes",
+    "getRandomVote": "/v1/votes/{id}",
+    "postVotes": "/v1/votes",
+    "getCreatedVote": "/v1/votes/{id}",
+    "deleteVote": "/v1/votes/{vote_id}",
+    "getDeletedVote": "/v1/votes/{id}"
+}
