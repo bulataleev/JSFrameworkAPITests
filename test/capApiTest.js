@@ -66,26 +66,25 @@ describe('/Get random id  - /votes/{id}', function () {
         addContext(this, 'Response: ' + JSON.stringify(res.body));
         expect(res.statusCode, 'status is not OK').equal(200);
         expect(JSON.stringify(res.body), "ERROR is detected in response").not.contains("error");
-        //console.log("response is here: ");
+        
         response_objects = JSON.parse(JSON.stringify(res.body));
 
         var o = response_objects[81];
-        //console.log(o);
 
 
         random_id = Math.floor(Math.random() * (response_objects.length+1));
-        //console.log(random_id);
+        
         random_object = response_objects[random_id];
         random_vote_id= random_object["id"];
 
         
         random_url = getRandomVote.replace("{id}", random_vote_id);
-        //random_url = getVotes+"/"+random_vote_id;
+        
         console.log("random_url"+random_url);
         random_res =  await api.GET(random_url, _headers);
         expect(random_res.statusCode, 'status is not OK').equal(200);
         expect(JSON.stringify(res.body), "ERROR is detected in response").not.contains("error");
-        //console.log(random_res);
+       
 
         
     });
@@ -95,7 +94,7 @@ describe('/Get random id  - /votes/{id}', function () {
 });
 
 describe('POST create new vote,  DELETE it and check deletion', function () {
-    //this.timeout(3000);
+    
     var res;
     var voted_id;
     var created_voteId_urll;
@@ -108,9 +107,9 @@ describe('POST create new vote,  DELETE it and check deletion', function () {
         expect(res.statusCode, 'status not OK').to.equal(200);
         expect(JSON.stringify(res.body), "ERROR is detected in response").not.contains("error");
         expect(res.body["message"]).equals("SUCCESS");
-        //console.log(res.body);
+        
         voted_id = res.body["id"]+"";
-        //console.log(voted_id);
+       
         expect(voted_id).is.not.empty;
 
     });
@@ -120,34 +119,31 @@ describe('POST create new vote,  DELETE it and check deletion', function () {
         res = await api.GET(created_voteId_urll, _headers);
         addContext(this, 'Response: ' + JSON.stringify(res.body));
         expect(res.statusCode, 'status not OK').to.equal(200);
-        //console.log(res.body);
+        
 
     });
     it('Delete verify  success status', async function () {
         this.timeout(2000);
         deleteVoteUrl = deleteVote.replace("{vote_id}", voted_id);
-        //console.log(deleteVoteUrl);
+        
         res = await api.DELETE(deleteVoteUrl, _headers, '');
         addContext(this, 'Response: ' + JSON.stringify(res.body));
         expect(res.statusCode, 'status not OK').to.equal(200);
         expect(JSON.stringify(res.body), "ERROR is detected in response").not.contains("error");
-        expect(JSON.stringify(res.body), "ERROR is detected in response").contains("SUCCESS");
+        expect(res.body.message).equals('SUCCESS');
        
-        //expect(res.body["message"]).equals("SUCCESS");
+        
     });
     it('Delete verify  success status', async function () {
-        //this.timeout(2000);
+        
         getDeletedVoteUrl = getDeletedVote.replace("{id}", voted_id);
         console.log( getDeletedVoteUrl);
         res = await api.GET( getDeletedVoteUrl, _headers);
         addContext(this, 'Response: ' + JSON.stringify(res.body));
         expect(res.statusCode, 'status not OK').to.equal(404);
         expect(JSON.stringify(res.body), "ERROR is detected in response").not.contains("error");
-        //expect(JSON.stringify(res.body), "ERROR is detected in response").contains("SUCCESS");
        expect(res.body.message).equals('NOT_FOUND');
-        
-       
-        //expect(res.body["message"]).equals("SUCCESS");
+
     });
 
 });
